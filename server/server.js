@@ -10,5 +10,5 @@ app.listen(port, function(){
   console.log('listening on port', port);
 });
 
-// const R1 = require('./routers/R1.js');
-// app.use('/R1', R1);
+const R1 = require('./routers/R1.js');
+app.use('/R1', R1);

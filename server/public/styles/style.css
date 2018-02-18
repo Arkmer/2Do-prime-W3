@@ -1,3 +1,17 @@
-p{
-    color: red;
+.taskItem{
+    border: solid;
+    border-color: black;
+    margin: 2px;
+}
+
+.taskButtons{
+    float: right;
+}
+
+.taskLabel{
+    float: left;
+}
+
+.taskDetails{
+
 }
