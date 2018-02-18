@@ -2,6 +2,7 @@ $(document).ready(onReady);
 
 function onReady(){
     $('#navBar').on('click', '#addTaskButton', addTask);
+    $('#navBar').on('click', '#refreshTasksButton', refreshTasks);
     $('#tasks').on('click', '.taskComplete', taskComplete);
     $('#tasks').on('click', '.taskDelete', taskDelete);
     $('#tasks').on('click', '.taskDetails', taskDetails);
@@ -20,7 +21,8 @@ function appendNavBar(){
     let stringToAppend = '';
     stringToAppend += `
     <div id="header">Header</div>
-    <div id="addTask"><button id="addTaskButton">Add Task</button></div>`
+    <div id="addTask"><button id="addTaskButton">Add Task</button></div>
+    <div id="addTask"><button id="refreshTasksButton">Refresh Tasks</button></div>`
     $('#navBar').empty().append(stringToAppend);
 } // end appendNavBar
 
@@ -42,7 +44,7 @@ function appendTasks(taskArray){
         <div class="taskLabel">${task.title}</div>
         <div class="taskButtons">
             <button type="button" class="taskComplete">Complete</button>
-            <button type="button" class="taskDelete">Delete</button>
+            <button type="button" data-id="${task.id}" class="taskDelete">Delete</button>
             <button type="button" class="taskDetails">Details</button>
         </div>
         <div class="taskDetailsView">
@@ -53,9 +55,7 @@ function appendTasks(taskArray){
             </div>
         </div>
         </div>`
-        console.log('appendTasks', task.title);
     }
-    
     $('#tasks').empty();
     $('#tasks').append(stringToAppend);
 } // end appendTasks
@@ -73,15 +73,17 @@ function addTask(){
     appendDOM();
 } // end addTask
 
+function refreshTasks(){
+    appendDOM();
+}
+
 function postTask(newTask){
-    console.log('saveTask', newTask);
     $.ajax({
       url: '/R1/saveTask',
       type: 'POST',
       data: newTask
     }).done(function(data){
-      console.log('Task sent to DB:', data);
-    //   appendTasks(data);
+      console.log('postTask (client)', data);
     }).fail(function(error){
       console.log(error)
     }); //end ajax
@@ -93,7 +95,7 @@ function getAllTasks(){
         url: '/R1/getAllTasks',
         type: 'GET'
     }).done(function(data){
-        console.log('GET:', data);
+        console.log('getAllTasks (client)', data);
         appendTasks(data);
     }).fail(function(error){
         console.log(error)
@@ -105,7 +107,17 @@ function taskComplete(){
 }
 
 function taskDelete(){
-    console.log('Delete');
+    let id = $(this).data('id');
+    $.ajax({
+        type: 'delete',
+        url: '/R1/taskDelete',
+        data: {'id': id}
+    }).done(function(data){
+        console.log('taskDelete (client)', data);
+        getAllTasks();
+    }).fail(function(error){
+        console.log(error)
+    }); //end ajax
 }
 
 function taskDetails(){
