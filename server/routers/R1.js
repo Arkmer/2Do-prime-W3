@@ -5,8 +5,8 @@ const pool = require('../modules/pool.js');
 
 router.post('/saveTask', function(req, res){
     taskObject = req.body
-    const sqlText = `insert into tasks (title, notes) values($1, $2);`
-    pool.query(sqlText, [taskObject.task, taskObject.notes])
+    const sqlText = `insert into tasks (title, notes) values($1, $2, $3);`
+    pool.query(sqlText, [taskObject.task, taskObject.notes, taskObject.category])
     .then(function(result){
         console.log('postTask (R1)', result);
         res.send(201);

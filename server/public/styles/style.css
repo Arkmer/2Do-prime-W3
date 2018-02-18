@@ -5,13 +5,17 @@
 }
 
 .taskButtons{
-    float: right;
+    /* float: right; */
 }
 
 .taskLabel{
-    float: left;
+    /* float: left; */
 }
 
 .taskDetails{
 
+}
+
+#addTaskButton{
+    width: 40px;
 }

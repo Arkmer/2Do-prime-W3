@@ -2,7 +2,6 @@ $(document).ready(onReady);
 
 function onReady(){
     $('#navBar').on('click', '#addTaskButton', addTask);
-    $('#navBar').on('click', '#refreshTasksButton', refreshTasks);
     $('#tasks').on('click', '.taskComplete', taskComplete);
     $('#tasks').on('click', '.taskDelete', taskDelete);
     $('#tasks').on('click', '.taskDetails', taskDetails);
@@ -17,12 +16,10 @@ function appendDOM(){
 }
 
 function appendNavBar(){
-
     let stringToAppend = '';
     stringToAppend += `
     <div id="header">Header</div>
-    <div id="addTask"><button id="addTaskButton">Add Task</button></div>
-    <div id="addTask"><button id="refreshTasksButton">Refresh Tasks</button></div>`
+    <div id="addTask"><img src="./styles/addButton.png" id="addTaskButton"></div>`
     $('#navBar').empty().append(stringToAppend);
 } // end appendNavBar
 
@@ -70,12 +67,8 @@ function addTask(){
     $('#notesIn').val('');
     $('#categoriesIn').val('');
     postTask(objectToSend);
-    appendDOM();
+    // appendDOM();
 } // end addTask
-
-function refreshTasks(){
-    appendDOM();
-}
 
 function postTask(newTask){
     $.ajax({
@@ -84,6 +77,7 @@ function postTask(newTask){
       data: newTask
     }).done(function(data){
       console.log('postTask (client)', data);
+      appendDOM();
     }).fail(function(error){
       console.log(error)
     }); //end ajax
