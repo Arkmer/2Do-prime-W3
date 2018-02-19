@@ -32,7 +32,7 @@ function appendTasks(taskArray){
     let stringToAppend = '';
     for(task of taskArray){
     stringToAppend +=`
-        <div class="taskItem" id="${task.id}">
+        <div class="taskItem ${task.complete}" id="${task.id}">
             <div class="taskLabel">${task.title}</div>
             <div class="taskButtons">
                 <button type="button" data-id="${task.id}" class="taskComplete">Complete</button>
@@ -81,9 +81,6 @@ function getAllTasks(){
 
 function taskComplete(){
     let id = $(this).data('id');
-    $(this).attr('border', 'solid')
-    $(this).attr('border-width', '3px')
-    $(this).attr('border-color', 'red')
     $.ajax({
         type: 'put',
         url: '/R1/taskComplete',

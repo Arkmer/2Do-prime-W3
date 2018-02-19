@@ -7,3 +7,7 @@
 #addTaskButton{
     width: 40px;
 }
+
+.yes{
+    border-color: green !important;
+}
