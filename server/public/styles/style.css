@@ -4,18 +4,6 @@
     margin: 2px;
 }
 
-.taskButtons{
-    /* float: right; */
-}
-
-.taskLabel{
-    /* float: left; */
-}
-
-.taskDetails{
-
-}
-
 #addTaskButton{
     width: 40px;
 }

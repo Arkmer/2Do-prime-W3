@@ -4,9 +4,7 @@ function onReady(){
     $('#navBar').on('click', '#addTaskButton', addTask);
     $('#tasks').on('click', '.taskComplete', taskComplete);
     $('#tasks').on('click', '.taskDelete', taskDelete);
-    $('#tasks').on('click', '.taskDetails', taskDetails);
-    $('#tasks').on('click', '.taskEdit', taskEdit);
-    appendDOM(); // None of the DOM functions are variable yet.
+    appendDOM();
 } // end onReady
 
 function appendDOM(){
@@ -26,10 +24,7 @@ function appendNavBar(){
 function appendInputFields(){
     stringToAppend = '';
         stringToAppend += `
-        <input type="text" id="taskIn" placeholder="Task"></input>
-        <input type="text" id="notesIn" placeholder="Notes"></input>
-        <input type="text" id="categoriesIn" placeholder="Category"></input>
-        `
+        <input type="text" id="taskIn" placeholder="Task"></input>`
         $('#taskInputs').empty().append(stringToAppend);
 } // end appendInputFields
 
@@ -37,20 +32,12 @@ function appendTasks(taskArray){
     let stringToAppend = '';
     for(task of taskArray){
     stringToAppend +=`
-        <div class="taskItem">
-        <div class="taskLabel">${task.title}</div>
-        <div class="taskButtons">
-            <button type="button" class="taskComplete">Complete</button>
-            <button type="button" data-id="${task.id}" class="taskDelete">Delete</button>
-            <button type="button" class="taskDetails">Details</button>
-        </div>
-        <div class="taskDetailsView">
-            <div class="taskInfo">
-                <div class="taskNotes">${task.notes}</div>
-                <button type="button" class="taskEdit">Edit</button>
-                <div class="taskCategories">Categories</div>
+        <div class="taskItem" id="${task.id}">
+            <div class="taskLabel">${task.title}</div>
+            <div class="taskButtons">
+                <button type="button" data-id="${task.id}" class="taskComplete">Complete</button>
+                <button type="button" data-id="${task.id}" class="taskDelete">Delete</button>
             </div>
-        </div>
         </div>`
     }
     $('#tasks').empty();
@@ -60,12 +47,8 @@ function appendTasks(taskArray){
 function addTask(){
     var objectToSend = {
       task: $('#taskIn').val(),
-      notes: $('#notesIn').val(),
-      categories: $('#categoriesIn').val()
     }
     $('#taskIn').val('');
-    $('#notesIn').val('');
-    $('#categoriesIn').val('');
     postTask(objectToSend);
     // appendDOM();
 } // end addTask
@@ -97,7 +80,20 @@ function getAllTasks(){
 } // end getAllTasks
 
 function taskComplete(){
-    console.log('Complete');
+    let id = $(this).data('id');
+    $(this).attr('border', 'solid')
+    $(this).attr('border-width', '3px')
+    $(this).attr('border-color', 'red')
+    $.ajax({
+        type: 'put',
+        url: '/R1/taskComplete',
+        data: {'id': id}
+    }).done(function(data){
+        console.log('taskComplete (client)', data);
+        getAllTasks();
+    }).fail(function(error){
+        console.log(error)
+    }); //end ajax
 }
 
 function taskDelete(){
@@ -112,12 +108,4 @@ function taskDelete(){
     }).fail(function(error){
         console.log(error)
     }); //end ajax
-}
-
-function taskDetails(){
-    console.log('Details');
-}
-
-function taskEdit(){
-    console.log('Edit');
 }
