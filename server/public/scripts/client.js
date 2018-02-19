@@ -35,8 +35,8 @@ function appendTasks(taskArray){
         <div class="taskItem ${task.complete}" id="${task.id}">
             <div class="taskLabel">${task.title}</div>
             <div class="taskButtons">
-                <button type="button" data-id="${task.id}" class="taskComplete">Complete</button>
-                <button type="button" data-id="${task.id}" class="taskDelete">Delete</button>
+                <img src="./styles/completeBox.png" data-id="${task.id}" class="taskComplete">
+                <img src="./styles/deleteButton.png" data-id="${task.id}" class="taskDelete">
             </div>
         </div>`
     }

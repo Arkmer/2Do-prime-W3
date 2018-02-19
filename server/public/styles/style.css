@@ -2,6 +2,7 @@
     border: solid;
     border-color: black;
     margin: 2px;
+    width: 300px;
 }
 
 #addTaskButton{
@@ -10,4 +11,17 @@
 
 .yes{
     border-color: green !important;
+    background-color: lightgreen;
+}
+
+.taskLabel{
+    float: left;
+    margin-top: 4px;
+    margin-left: 3px;
+}
+
+.taskButtons img{
+    width: 20px;
+    margin-top: 4px;
+    text-align: right;
 }
